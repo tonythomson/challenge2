@@ -15,10 +15,24 @@
 // the specified lexicographical ordering. You may also assume that the
 // characters in the strings to sort consist only of lowercase a-z.
 
-function lexicoSort(arrayOfStrings, lexicoOrder) {
+function lexicoSort(arrayOfStrings, orderStr) {
   'use strict';
 
+  function customComparator(a, b, orderStr) {
+    return orderStr.indexOf(a) - orderStr.indexOf(b);
+  }
 
+  return arrayOfStrings.sort(function(aStr, bStr) {
+    var pos = 0;
 
-
+    while (aStr[pos] === bStr[pos]) {
+      pos++
+    }
+    return customComparator(aStr[pos], bStr[pos], orderStr);
+  })
 };
+
+
+lexicoSort(['acb', 'abc', 'bca'], 'abc')
+lexicoSort(['acb', 'abc', 'bca'], 'cba')
+lexicoSort(['aaa','aa',''], 'a')
