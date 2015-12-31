@@ -33,10 +33,8 @@ The complexity of the sorting approach is going to depend on what algorithm is
 used. Based on some [quick searching](http://stackoverflow.com/questions/234683/javascript-array-sort-implementation), most browsers are most likely using either
 a mergeSort or quickSort, both of which have a complexity of O(N log N) (for the average case—quickSort has a worst case of O(n^2)).
 
-The complexity of the comparator depends largely on the cost of the JS String.indexOf() method. This is most likely O(N), as the fastest way to determine the index of a character would be to traverse the string, starting at the beginning. Since we are calling `indexOf` for two characters, we could say O(2N), which is just O(N).
+The complexity of the comparator depends largely on the cost of looking up the position of a character in the hash object. This should require one operation, or a cost of O(1) (this is a significant improvement over the previous approach, that used `indexOf`).
 
-O(N log N) x O(N) = O(N^2 log N)
+O(N log N) x O(1) = O(N log N)
 
-### Improvements?
-
-So, the index look-up of the comparator is costing us a whole order of complexity; let's see if we can reduce that.
+At this point, our function has the same complexity of the native JS `sort()` function, however it was implemented by the relevant browser or engine.

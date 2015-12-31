@@ -19,12 +19,31 @@
 * characters in the strings to sort consist only of lowercase a-z.
 */
 
+  var orderHash = {};
 function lexicoSort(arrayOfStrings, orderStr) {
   'use strict';
 
-  function customComparator(a, b, orderStr) {
-    return orderStr.indexOf(a) - orderStr.indexOf(b);
+
+  function initOrderHash(orderStr) {
+    var hash = {};
+    orderStr
+      .split('')
+      .forEach(function(char, index) {
+        hash[char] = index + 1;     // Add 1 to index so there are no zero entries
+      });
+
+    return hash;
   }
+
+  function customComparator(a, b, orderHash) {
+    // Set to -1 here to handle case of empty string; we want those to come first
+    var first = orderHash[a] ? orderHash[a] : -1,
+      second = orderHash[b] ? orderHash[b] : -1;
+
+    return first - second;
+  }
+
+  orderHash = initOrderHash(orderStr);
 
   return arrayOfStrings.sort(function(aStr, bStr) {
     var pos = 0;
@@ -32,7 +51,7 @@ function lexicoSort(arrayOfStrings, orderStr) {
     while (aStr[pos] === bStr[pos]) {
       pos++
     }
-    return customComparator(aStr[pos], bStr[pos], orderStr);
+    return customComparator(aStr[pos], bStr[pos], orderHash);
   })
 };
 
